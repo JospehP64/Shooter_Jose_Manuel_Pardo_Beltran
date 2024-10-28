@@ -5,6 +5,15 @@ using UnityEngine;
 
 public class ThirdPerson : MonoBehaviour
 {
+    [Header("JumpValues")]
+    [SerializeField] float JumpHigh;
+
+    [Header("DetectGround")]
+    [SerializeField] Transform Feet;
+    [SerializeField] Vector3 radioDeteccion;
+    [SerializeField] float radiovalue;
+    [SerializeField] LayerMask WhatIsfloor;
+        
     Camera MainCamera;//solo es para acortar el Camera.main
     [SerializeField] float playerSpeed;
     [SerializeField] int vida = 3;
@@ -13,6 +22,9 @@ public class ThirdPerson : MonoBehaviour
      [SerializeField] float SmoothingTime;
     [SerializeField] float RotationSpeed;
     Animator anima;
+    [SerializeField]float GravityScale;
+    [SerializeField]Vector3 verticalMove = new Vector3();
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +52,28 @@ public class ThirdPerson : MonoBehaviour
             transform.eulerAngles = new Vector3(0, angleRotation, 0);
             Vector3 movement = Quaternion.Euler(0, angleRotation, 0) * Vector3.forward;
             CController.Move(movement * playerSpeed * Time.deltaTime);
+            applyGravity();
+            TouchTheGround();
+            DrawShape();
         }
 
+    }
+
+    private void applyGravity()
+    {
+        verticalMove.y += GravityScale * Time.deltaTime;
+        CController.Move(verticalMove * Time.deltaTime);
+    }
+
+    private void TouchTheGround()
+    {
+        //Physics.Raycast()
+        Collider[] CollidesDetected = Physics.OverlapCapsule(Feet.position, radioDeteccion, WhatIsfloor);
+        if (CollidesDetected.Length > 0)
+        {
+            verticalMove.y = 0;
+        }
+        JumpForce();
     }
 
     private void NewMethod(out float h, out float v)
@@ -51,5 +83,18 @@ public class ThirdPerson : MonoBehaviour
         v = Input.GetAxisRaw("Vertical");
          
         anima.SetBool("BoolWalking", true);
+    }
+    private void DrawShape ()
+    {
+        Gizmos.DrawSphere(Feet.position, radiovalue);
+        Gizmos.color = Color.yellow;
+    }
+
+    private void JumpForce()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            verticalMove.y = Mathf.Sqrt(-2 * GravityScale * JumpHigh);
+        }
     }
 }

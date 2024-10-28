@@ -1536,6 +1536,37 @@ Transform:
   - {fileID: 2318446410682135855}
   m_Father: {fileID: 7828250756802351751}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5720711779489168822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8322565192413597896}
+  m_Layer: 0
+  m_Name: 3rd_person_feet
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8322565192413597896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720711779489168822}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.046, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1431488599196628907}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5739018231984069488
 GameObject:
   m_ObjectHideFlags: 0
@@ -1734,6 +1765,7 @@ Transform:
   - {fileID: 2707662745258852667}
   - {fileID: 5767142110283948555}
   - {fileID: 1995697349689874829}
+  - {fileID: 8322565192413597896}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2599370855954348233
@@ -1748,10 +1780,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8d9d5404bbbd74b94ea4f207464706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Feet: {fileID: 8322565192413597896}
+  radioDeteccion: {x: 0, y: 0, z: 0}
+  radiovalue: 0
+  WhatIsfloor:
+    serializedVersion: 2
+    m_Bits: 0
   playerSpeed: 3
   vida: 3
   angleRotation: 0
+  SmoothingTime: 0
   RotationSpeed: 0.3
+  GravityScale: 0
 --- !u!143 &166637468198056874
 CharacterController:
   m_ObjectHideFlags: 0
