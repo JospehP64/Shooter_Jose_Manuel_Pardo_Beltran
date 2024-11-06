@@ -1780,18 +1780,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a8d9d5404bbbd74b94ea4f207464706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  JumpHigh: 2
   Feet: {fileID: 8322565192413597896}
-  radioDeteccion: {x: 0, y: 0, z: 0}
-  radiovalue: 0
+  radioDeteccion: {x: 3, y: 3, z: 3}
+  radiovalue: 3
   WhatIsfloor:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
   playerSpeed: 3
   vida: 3
   angleRotation: 0
-  SmoothingTime: 0
-  RotationSpeed: 0.3
-  GravityScale: 0
+  SmoothingTime: 0.39
+  RotationSpeed: 0.39
+  GravityScale: -1
+  verticalMove: {x: 0, y: 1, z: 0}
 --- !u!143 &166637468198056874
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1812,7 +1814,7 @@ CharacterController:
   m_Enabled: 1
   serializedVersion: 3
   m_Height: 2
-  m_Radius: 0.5
+  m_Radius: 0.22
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
