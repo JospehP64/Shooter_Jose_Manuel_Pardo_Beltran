@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class FirstPerson : MonoBehaviour
 {
@@ -9,12 +11,17 @@ public class FirstPerson : MonoBehaviour
     [SerializeField] int vida = 3;
     CharacterController CController;
     [SerializeField] float angleRotation;
+    [SerializeField]Camera firstCamera;
+    
+    private Transform Interactable;
+    [SerializeField]float raycastsyze = 2;
     
 
     // Start is called before the first frame update
     void Start()
     {
        CController = GetComponent<CharacterController>();
+        Interactable.GetComponent<Outline>().enabled = false;
     }
 
     // Update is called once per frame
@@ -35,6 +42,26 @@ public class FirstPerson : MonoBehaviour
             transform.eulerAngles = new Vector3(0, angleRotation, 0);
             Vector3 movement = Quaternion.Euler(0, angleRotation, 0) * Vector3.forward;
             CController.Move(movement * playerSpeed * Time.deltaTime);
+            detectarRecolectable();
+
+
+        }
+
+        void detectarRecolectable()
+        {
+            if (Physics.Raycast(firstCamera.transform.position, firstCamera.transform.forward, out RaycastHit hit, raycastsyze))
+            {
+                if (hit.transform.CompareTag("Objeto"))
+                {
+                    Interactable = hit.transform;
+                    Interactable.GetComponent<Outline>().enabled = true;
+                }
+                else if (Interactable)
+                {
+                    Interactable.GetComponent<Outline>().enabled = false;
+                    Interactable = null;
+                }
+            }
         }
         
     }
