@@ -11,7 +11,7 @@ public class FirstPerson : MonoBehaviour
     [SerializeField] int vida = 3;
     CharacterController CController;
     [SerializeField] float angleRotation;
-    [SerializeField]Camera firstCamera;
+    
     
     private Transform Interactable;
     [SerializeField]float raycastsyze = 2;
@@ -21,7 +21,7 @@ public class FirstPerson : MonoBehaviour
     void Start()
     {
        CController = GetComponent<CharacterController>();
-        Interactable.GetComponent<Outline>().enabled = false;
+        MainCamera = Camera.main;
     }
 
     // Update is called once per frame
@@ -42,27 +42,28 @@ public class FirstPerson : MonoBehaviour
             transform.eulerAngles = new Vector3(0, angleRotation, 0);
             Vector3 movement = Quaternion.Euler(0, angleRotation, 0) * Vector3.forward;
             CController.Move(movement * playerSpeed * Time.deltaTime);
-            detectarRecolectable();
 
 
         }
 
-        void detectarRecolectable()
+        detectarRecolectable();
+        
+    }
+    void detectarRecolectable()
+    {
+        if (Physics.Raycast(MainCamera.transform.position, MainCamera.transform.forward, out RaycastHit hit, raycastsyze))
         {
-            if (Physics.Raycast(firstCamera.transform.position, firstCamera.transform.forward, out RaycastHit hit, raycastsyze))
+            if (hit.transform.CompareTag("Objeto"))
             {
-                if (hit.transform.CompareTag("Objeto"))
-                {
-                    Interactable = hit.transform;
-                    Interactable.GetComponent<Outline>().enabled = true;
-                }
-                else if (Interactable)
-                {
-                    Interactable.GetComponent<Outline>().enabled = false;
-                    Interactable = null;
-                }
+                Interactable = hit.transform;
+                Interactable.GetComponent<Outline>().enabled = true;
             }
         }
-        
+        else if (Interactable)
+        {
+            Interactable.GetComponent<Outline>().enabled = false;
+            Interactable = null;
+                    
+        }
     }
 }

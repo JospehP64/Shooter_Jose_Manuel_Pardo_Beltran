@@ -10,15 +10,14 @@ public class Foe : MonoBehaviour
 
     //Foe = Enemigo
     Animator animate;
-    FirstPerson Firstplayer;
-    [SerializeField]GameObject player;
+    FirstPerson player;
     NavMeshAgent agent;
     // Start is called before the first frame update
     void Start()
     {
 
        agent = GetComponent<NavMeshAgent>();
-        //player = GameObject.FindObjectOfType<FirstPerson>();//para que el enemigo persiga a su objetivo
+        player = GameObject.FindObjectOfType<FirstPerson>();//para que el enemigo persiga a su objetivo
         animate = GetComponent<Animator>();
         
     }
