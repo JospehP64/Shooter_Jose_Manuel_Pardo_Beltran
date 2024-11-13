@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class FirstPerson : MonoBehaviour
 {
+    
     Camera MainCamera;//solo es para acortar el Camera.main
     [SerializeField]float playerSpeed;
     [SerializeField] int vida = 3;
@@ -53,10 +54,14 @@ public class FirstPerson : MonoBehaviour
     {
         if (Physics.Raycast(MainCamera.transform.position, MainCamera.transform.forward, out RaycastHit hit, raycastsyze))
         {
-            if (hit.transform.CompareTag("Objeto"))
+            if (hit.transform.TryGetComponent(out AmmoBox MunitionBox))
             {
                 Interactable = hit.transform;
                 Interactable.GetComponent<Outline>().enabled = true;
+                if (Input.GetMouseButtonDown(0))//para activar la animacion de abrir la caja
+                {
+                    MunitionBox.abrir();
+                }
             }
         }
         else if (Interactable)
