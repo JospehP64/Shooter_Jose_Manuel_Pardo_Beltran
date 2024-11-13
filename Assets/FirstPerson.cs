@@ -58,7 +58,7 @@ public class FirstPerson : MonoBehaviour
             {
                 Interactable = hit.transform;
                 Interactable.GetComponent<Outline>().enabled = true;
-                if (Input.GetMouseButtonDown(0))//para activar la animacion de abrir la caja
+                if (Input.GetKeyDown(KeyCode.E))//para activar la animacion de abrir la caja
                 {
                     MunitionBox.abrir();
                 }
