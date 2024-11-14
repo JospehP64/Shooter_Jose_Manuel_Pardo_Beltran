@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -27,7 +28,7 @@ public class Foe : MonoBehaviour
     {
         agent.SetDestination(player.transform.position);
 
-        if(agent.remainingDistance <= agent.stoppingDistance)
+        if(agent.pathPending == false && agent.remainingDistance <= agent.stoppingDistance)//tambien puedes usar !agent.pathPending (recuerda que ! es para negar)
         {
             agent.isStopped = true;
             animate.SetBool("atacar", true);

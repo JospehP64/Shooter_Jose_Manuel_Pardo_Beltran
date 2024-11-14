@@ -15,8 +15,8 @@ public class Corrutina : MonoBehaviour
     {
         //quaternion.identity quiere decir "rotación" 0,0,0 (en matemáticas, "matriz" e "identidad" ("coordenadas" = "¿posicion?")
         StartCoroutine(semaforo());//IMPORTANTE: SE DEBE USAR STARTCOROUTINE EN START, NO EN UPDATE SOLO Y SIEMPRE QUE SE USE UN METODO IENUMERATOR
-        Instantiate(foewspawn, spawnpoints[0].position, Quaternion.identity);
-        Instantiate(foewspawn, spawnpoints[1].position, Quaternion.identity);
+        Instantiate(foewspawn, spawnpoints[Random.Range(0, 2)].position, Quaternion.identity);//con random range puedes crear probabilidades de que se genere un nuevo enemigo en un lugar aleatorio
+        
     }
 
     // Update is called once per frame
