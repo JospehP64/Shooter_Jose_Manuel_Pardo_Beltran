@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class FirstPerson : MonoBehaviour
 {
+    [SerializeField] GameObject grenade;
+    [SerializeField] Transform grenadespawn;
     [SerializeField]GameObject[] armas;
     Camera MainCamera;//solo es para acortar el Camera.main
     [SerializeField]float playerSpeed;
@@ -58,7 +62,7 @@ public class FirstPerson : MonoBehaviour
     
     void detectarRecolectable()
     {
-        if (Physics.Raycast(MainCamera.transform.position, MainCamera.transform.forward, out RaycastHit hit, raycastsyze))
+        if (!Physics.Raycast(MainCamera.transform.position, MainCamera.transform.forward, out RaycastHit hit, raycastsyze))
         {
             if (hit.transform.TryGetComponent(out AmmoBox MunitionBox))
             {
@@ -97,5 +101,28 @@ public class FirstPerson : MonoBehaviour
             armas[1].SetActive(false);
             armas[2].SetActive(true);
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            LanzaGranadas();
+        }
+    }
+   //void armaMouse()
+   //{
+   //    float scrollwheel = Input.GetAxis("Mouse Scrollwheel");
+   //        if (scrollwheel > 0)
+   //    {
+   //        armas[0].SetActive (true);
+   //        armas[1].SetActive (false);
+   //    }
+   //        else if (scrollwheel < 0)
+   //    {
+   //        armas[0].SetActive(false);
+   //        armas[1].SetActive(true);
+   //    }
+   //}
+   void LanzaGranadas()
+    {
+        Instantiate(grenade, grenadespawn.position, grenadespawn.rotation);
+
     }
 }
