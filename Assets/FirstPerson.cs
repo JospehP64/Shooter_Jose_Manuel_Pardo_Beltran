@@ -10,23 +10,23 @@ public class FirstPerson : MonoBehaviour
 {
     [SerializeField] GameObject grenade;
     [SerializeField] Transform grenadespawn;
-    [SerializeField]GameObject[] armas;
+    [SerializeField] GameObject[] armas;
     Camera MainCamera;//solo es para acortar el Camera.main
-    [SerializeField]float playerSpeed;
+    [SerializeField] float playerSpeed;
     [SerializeField] int vida = 3;
     CharacterController CController;
     [SerializeField] float angleRotation;
-    
-    
+
+
     private Transform Interactable;
-    [SerializeField]float raycastsyze = 2;
-    
+    [SerializeField] float raycastsyze = 2;
+
 
     // Start is called before the first frame update
     void Start()
     {
         armas = GetComponentsInChildren<GameObject>();
-       CController = GetComponent<CharacterController>();
+        CController = GetComponent<CharacterController>();
         MainCamera = Camera.main;
         armas[0].SetActive(false);
         armas[1].SetActive(false);
@@ -57,9 +57,9 @@ public class FirstPerson : MonoBehaviour
         }
 
         detectarRecolectable();
-        
+
     }
-    
+
     void detectarRecolectable()
     {
         if (!Physics.Raycast(MainCamera.transform.position, MainCamera.transform.forward, out RaycastHit hit, raycastsyze))
@@ -78,24 +78,24 @@ public class FirstPerson : MonoBehaviour
         {
             Interactable.GetComponent<Outline>().enabled = false;
             Interactable = null;
-                    
+
         }
     }
     void activarARMA()
     {
-        if (Input.GetKeyDown (KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             armas[0].SetActive(true);
             armas[1].SetActive(false);
             armas[2].SetActive(false);
         }
-        else if (Input.GetKeyDown (KeyCode.Y))
+        else if (Input.GetKeyDown(KeyCode.Y))
         {
             armas[0].SetActive(false);
             armas[1].SetActive(true);
             armas[2].SetActive(false);
         }
-        else if (Input.GetKeyDown (KeyCode.U))
+        else if (Input.GetKeyDown(KeyCode.U))
         {
             armas[0].SetActive(false);
             armas[1].SetActive(false);
@@ -106,23 +106,30 @@ public class FirstPerson : MonoBehaviour
             LanzaGranadas();
         }
     }
-   //void armaMouse()
-   //{
-   //    float scrollwheel = Input.GetAxis("Mouse Scrollwheel");
-   //        if (scrollwheel > 0)
-   //    {
-   //        armas[0].SetActive (true);
-   //        armas[1].SetActive (false);
-   //    }
-   //        else if (scrollwheel < 0)
-   //    {
-   //        armas[0].SetActive(false);
-   //        armas[1].SetActive(true);
-   //    }
-   //}
-   void LanzaGranadas()
+    //void armaMouse()
+    //{
+    //    float scrollwheel = Input.GetAxis("Mouse Scrollwheel");
+    //        if (scrollwheel > 0)
+    //    {
+    //        armas[0].SetActive (true);
+    //        armas[1].SetActive (false);
+    //    }
+    //        else if (scrollwheel < 0)
+    //    {
+    //        armas[0].SetActive(false);
+    //        armas[1].SetActive(true);
+    //    }
+    //}
+    void LanzaGranadas()
     {
         Instantiate(grenade, grenadespawn.position, grenadespawn.rotation);
 
     }
+
+   //void DisparoDeMetralleta()
+   //{
+   //    if (armas.Length >= 3 && Input.GetMouseButton(0))
+   //    {
+   //        Physics.Raycast(MainCamera.transform, )
+   //    }
 }
