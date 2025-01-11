@@ -399,7 +399,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56ab792e9c9e60845bdf511fd1627990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  attackPointPosition: {fileID: 0}
+  attackRadius: 0
 --- !u!195 &-1249422961070595680
 NavMeshAgent:
   m_ObjectHideFlags: 0

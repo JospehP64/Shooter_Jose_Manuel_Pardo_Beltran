@@ -8,7 +8,7 @@ public class Foe : MonoBehaviour
 {
     [SerializeField] Transform attackPointPosition;
     [SerializeField] float attackRadius;
-
+    float followrange = 5f;
     //Foe = Enemigo
     Animator animate;
     FirstPerson player;
@@ -18,7 +18,7 @@ public class Foe : MonoBehaviour
     {
 
        agent = GetComponent<NavMeshAgent>();
-        player = GameObject.FindObjectOfType<FirstPerson>();//para que el enemigo persiga a su objetivo
+        player = FindObjectOfType<FirstPerson>();//para que el enemigo persiga a su objetivo
         animate = GetComponent<Animator>();
         
     }
@@ -26,26 +26,22 @@ public class Foe : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        
+
+        FoeAttack();
+
         agent.SetDestination(player.transform.position);
 
-        if(agent.pathPending == false && agent.remainingDistance <= agent.stoppingDistance)//tambien puedes usar !agent.pathPending (recuerda que ! es para negar)
+    }
+
+    private void FoeAttack()
+    {
+        if (agent.pathPending == false && agent.remainingDistance <= agent.stoppingDistance)//tambien puedes usar !agent.pathPending (recuerda que ! es para negar)
         {
             agent.isStopped = true;
             animate.SetBool("atacar", true);
 
         }
-        [SerializeField]void AttackAnimationEnd()
-        {
-
-        }
-        [SerializeField] void AttackWindowEnd()
-        {
-
-        }
-        [SerializeField] void AttackWindowStart()
-        {
-            Physics.OverlapSphere(attackPointPosition.position, attackRadius);
-        }
-        
     }
 }

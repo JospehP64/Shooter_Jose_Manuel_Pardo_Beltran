@@ -11,10 +11,10 @@ public class FirstPerson : MonoBehaviour
     [SerializeField] GameObject grenade;
     [SerializeField] Transform grenadespawn;
     [SerializeField] GameObject[] armas;
-    Camera MainCamera;//solo es para acortar el Camera.main
+    [SerializeField]Camera MainCamera;//solo es para acortar el Camera.main
     [SerializeField] float playerSpeed;
     [SerializeField] int vida = 3;
-    CharacterController CController;
+    [SerializeField]CharacterController CController;
     [SerializeField] float angleRotation;
 
 
