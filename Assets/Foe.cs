@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class Foe : MonoBehaviour
 {
-    [SerializeField] Transform attackPointPosition;
-    [SerializeField] float attackRadius;
-    float followrange = 5f;
+    //[SerializeField] Transform attackPointPosition;
+    //[SerializeField] float attackRadius;
+    
     //Foe = Enemigo
     Animator animate;
     FirstPerson player;
@@ -19,7 +18,8 @@ public class Foe : MonoBehaviour
 
        agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<FirstPerson>();//para que el enemigo persiga a su objetivo
-        animate = GetComponent<Animator>();
+        
+        
         
     }
 
@@ -29,9 +29,9 @@ public class Foe : MonoBehaviour
 
         
 
-        FoeAttack();
-
-        agent.SetDestination(player.transform.position);
+       // FoeAttack();
+        agent.destination = player.transform.position;
+        
 
     }
 

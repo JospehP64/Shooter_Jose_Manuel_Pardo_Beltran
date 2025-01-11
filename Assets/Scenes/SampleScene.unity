@@ -1899,6 +1899,11 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: -8554759441569650344, guid: bdefc2c4f9120104db9c5995356cd4dd,
+        type: 3}
+      propertyPath: attackRadius
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: -1249422961070595680, guid: bdefc2c4f9120104db9c5995356cd4dd,
         type: 3}
       propertyPath: m_Radius
@@ -1907,7 +1912,7 @@ PrefabInstance:
     - target: {fileID: -1249422961070595680, guid: bdefc2c4f9120104db9c5995356cd4dd,
         type: 3}
       propertyPath: m_Acceleration
-      value: Infinity
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: -1249422961070595680, guid: bdefc2c4f9120104db9c5995356cd4dd,
         type: 3}
