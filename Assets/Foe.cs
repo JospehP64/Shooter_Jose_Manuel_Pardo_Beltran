@@ -29,26 +29,29 @@ public class Foe : MonoBehaviour
 
 
 
-         //FoeAttack();
+         FoeMovement();
+
+       
+        
+
+    }
+
+    private void FoeMovement()
+    {
         agent.SetDestination(player.transform.position);
-        if (agent.SetDestination(player.transform.position))
+        animate.SetFloat("BlendVelocity", agent.velocity.magnitude / agent.speed);
+    }
+    public void OnTriggerEnter(Collider DetectPlayer)
+    {
+        if (DetectPlayer.gameObject.CompareTag("Player"))
         {
-            animate.SetBool("caminar",true);
+            animate.SetTrigger("atacar");
+           
         }
         else
         {
-            animate.SetBool("caminar", false);
-        }
-
-    }
-
-    private void FoeAttack()
-    {
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)//tambien puedes usar !agent.pathPending (recuerda que ! es para negar)
-        {
-            agent.isStopped = true;
-            animate.SetTrigger("atacar");
 
         }
     }
+    
 }

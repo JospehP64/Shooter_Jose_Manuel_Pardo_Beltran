@@ -36,7 +36,18 @@ public class FirstPerson : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("Vida restante: " + vida);
         activarARMA();
+        Movimiento();
+        detectarRecolectable();
+
+       
+        
+
+    }
+
+    private void Movimiento()
+    {
         Cursor.lockState = CursorLockMode.Locked;
         float h = Input.GetAxisRaw("Horizontal");
         float v = Input.GetAxisRaw("Vertical");
@@ -55,9 +66,6 @@ public class FirstPerson : MonoBehaviour
 
 
         }
-
-        //detectarRecolectable();
-
     }
 
     void detectarRecolectable()
@@ -101,9 +109,17 @@ public class FirstPerson : MonoBehaviour
             armas[1].SetActive(false);
             armas[2].SetActive(true);
         }
-        if (Input.GetMouseButtonDown(0))
+        if (armas[1].activeSelf)
         {
-            LanzaGranadas();
+            if (Input.GetMouseButtonDown(0))
+            {
+                LanzaGranadas();
+            }
+            
+        }
+        else
+        {
+
         }
     }
     //void armaMouse()
@@ -132,4 +148,20 @@ public class FirstPerson : MonoBehaviour
    //    {
    //        Physics.Raycast(MainCamera.transform, )
    //    }
+   public void RecibirAtaque()
+    {
+
+        
+        if (vida <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            vida--;
+            Debug.Log("¡has recibido daño!");
+            Debug.Log("Te quedan: " + vida);
+        }
+
+    }
 }
