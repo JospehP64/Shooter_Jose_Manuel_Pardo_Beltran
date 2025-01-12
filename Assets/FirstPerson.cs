@@ -56,7 +56,7 @@ public class FirstPerson : MonoBehaviour
 
         }
 
-        detectarRecolectable();
+        //detectarRecolectable();
 
     }
 
