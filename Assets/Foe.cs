@@ -18,7 +18,7 @@ public class Foe : MonoBehaviour
 
        agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<FirstPerson>();//para que el enemigo persiga a su objetivo
-        
+        animate = GetComponent<Animator>();
         
         
     }
@@ -27,20 +27,27 @@ public class Foe : MonoBehaviour
     void Update()
     {
 
-        
 
-       // FoeAttack();
-        agent.destination = player.transform.position;
-        
+
+         //FoeAttack();
+        agent.SetDestination(player.transform.position);
+        if (agent.SetDestination(player.transform.position))
+        {
+            animate.SetBool("caminar",true);
+        }
+        else
+        {
+            animate.SetBool("caminar", false);
+        }
 
     }
 
     private void FoeAttack()
     {
-        if (agent.pathPending == false && agent.remainingDistance <= agent.stoppingDistance)//tambien puedes usar !agent.pathPending (recuerda que ! es para negar)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)//tambien puedes usar !agent.pathPending (recuerda que ! es para negar)
         {
             agent.isStopped = true;
-            animate.SetBool("atacar", true);
+            animate.SetTrigger("atacar");
 
         }
     }
