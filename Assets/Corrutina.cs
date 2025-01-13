@@ -60,7 +60,7 @@ public class Corrutina : MonoBehaviour
         while (spawnerAtivado)
         {
             yield return new WaitForSeconds(2);
-            if (EnemyCount < 5)
+            if (EnemyCount <= 0)
             {
                 for (int EnemyNumber = 0; EnemyNumber < 5; EnemyNumber++)
                 {
@@ -76,19 +76,19 @@ public class Corrutina : MonoBehaviour
                         Instantiate(foewspawn, spawnpoints[1].position, Quaternion.identity);
                         EnemyCount++;
                     }
-
+                    yield return new WaitForSeconds(2);
 
 
                     //con random range puedes crear probabilidades de que se genere un nuevo enemigo en un lugar aleatorio
 
                 }
             }
-            else
+            else if (EnemyCount >= 5)
             {
-
+                yield return new WaitForSeconds(2);
             }
             
-            yield return new WaitForSeconds(2);
+            
         }
         
         

@@ -9,6 +9,7 @@ public class Foe : MonoBehaviour
     //[SerializeField] float attackRadius;
     
     //Foe = Enemigo
+    
     Animator animate;
     FirstPerson player;
     NavMeshAgent agent;
@@ -46,7 +47,8 @@ public class Foe : MonoBehaviour
         Debug.Log("Vida de Enemigo restante: " + vidaEnemigpo);
         if (vidaEnemigpo <= 0)
         {
-            Destroy(gameObject);
+            
+            animate.SetTrigger("morir");
         }
         else
         {
@@ -54,16 +56,26 @@ public class Foe : MonoBehaviour
         }
     }
 
-   
+    
+
+
 
     private void FoeMovement()
     {
-        agent.SetDestination(player.transform.position);
-        animate.SetFloat("BlendVelocity", agent.velocity.magnitude / agent.speed);
+        if (vidaEnemigpo != 0)
+        {
+            agent.SetDestination(player.transform.position);
+            animate.SetFloat("BlendVelocity", agent.velocity.magnitude / agent.speed);
+        }
+        else
+        {
+            agent.enabled = false;
+        }
+        
     }
     public void OnTriggerEnter(Collider DetectPlayer)
     {
-        if (DetectPlayer.gameObject.CompareTag("Player"))
+        if (DetectPlayer.gameObject.CompareTag("Player") && vidaEnemigpo != 0)
         {
             animate.SetTrigger("atacar");
            

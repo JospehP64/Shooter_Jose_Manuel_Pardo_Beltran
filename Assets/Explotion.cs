@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Explotion : MonoBehaviour
 {
+    Foe EnemyToExplode;
     Corrutina CorrutinaEnemigo;
     // Start is called before the first frame update
     void Start()
     {
+        EnemyToExplode = FindObjectOfType<Foe>(); 
         CorrutinaEnemigo = FindObjectOfType<Corrutina>();
     }
 
@@ -20,9 +22,15 @@ public class Explotion : MonoBehaviour
     {
         if (ExplodeEnemy.gameObject.CompareTag("Enemy"))
         {
-            Destroy(ExplodeEnemy.gameObject);
-            CorrutinaEnemigo.EnemyCount--;
-            Destroy(gameObject, 3);
+            if (ExplodeEnemy.TryGetComponent<Foe> (out EnemyToExplode))
+            {
+                EnemyToExplode.VidaEnemigpo = 0;
+                CorrutinaEnemigo.EnemyCount--;
+                Destroy(gameObject, 0.3f);
+            }
+            
+            
+            
             
         }
     }

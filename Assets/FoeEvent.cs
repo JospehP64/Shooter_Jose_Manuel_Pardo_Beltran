@@ -6,11 +6,12 @@ using UnityEngine.AI;
 public class FoeEvent : MonoBehaviour
 {
     GameObject TargetPlayer;
+    Corrutina CorrutinaEnemigo;
     // Start is called before the first frame update
     private void Awake()
     {
         TargetPlayer = GameObject.FindGameObjectWithTag("Player");
-
+        CorrutinaEnemigo = FindObjectOfType<Corrutina>();
     }
     void Start()
     {
@@ -20,6 +21,13 @@ public class FoeEvent : MonoBehaviour
     private void Update()
     {
         
+    }
+
+    public void MuerteDeEnemigo()
+    {
+        AnimationEvent MuerteDeEnemigo = new AnimationEvent();
+        CorrutinaEnemigo.EnemyCount--;
+        Destroy(gameObject);
     }
     public void AtaqueAJugador()
     {

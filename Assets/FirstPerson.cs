@@ -9,12 +9,16 @@ using UnityEngine.UI;
 
 public class FirstPerson : MonoBehaviour
 {
+    float SpeedMultiplier = 3;
+    int MunicionGranadas = 3, MunicionLaser = 100, MunicionEscopeta= 5;
+    
+
     Foe Enemy;
     [SerializeField] GameObject grenade;
     [SerializeField] Transform grenadespawn;
     [SerializeField] GameObject[] armas;
     [SerializeField]Camera MainCamera;//solo es para acortar el Camera.main
-    [SerializeField] float playerSpeed;
+     float playerSpeed = 3;
     [SerializeField] int vida = 3;
     [SerializeField]CharacterController CController;
     float playergravity = -9.81f;
@@ -84,6 +88,8 @@ public class FirstPerson : MonoBehaviour
 
         }
         CController.Move(input.magnitude * movement * 3 * Time.deltaTime);
+        
+        
     }
 
     void detectarRecolectable()
@@ -157,8 +163,16 @@ public class FirstPerson : MonoBehaviour
                     {
                         if (hit.transform.CompareTag("Enemy"))
                         {
-                            Enemy.VidaEnemigpo--;
-                            Debug.Log("has disparado a un enemigo");
+                            if (Enemy.VidaEnemigpo > 0)
+                            {
+                                Enemy.VidaEnemigpo--;
+                                Debug.Log("has disparado a un enemigo");
+                            }
+                            else
+                            {
+                                
+                            }
+                            
                         }
                     }
                     else
@@ -171,7 +185,35 @@ public class FirstPerson : MonoBehaviour
         }
         else if (armas[2].activeSelf)
         {
+            if (Input.GetMouseButton(0))
+            {
+                if (Physics.Raycast(MainCamera.transform.position, transform.forward, out hit, raycastsyze))
+                {
+                    if (hit.transform.TryGetComponent<Foe>(out Enemy))
+                    {
+                        if (hit.transform.CompareTag("Enemy"))
+                        {
+                            if (Enemy.VidaEnemigpo > 0)
+                            {
+                                Enemy.VidaEnemigpo--;
+                                Debug.Log("has disparado a un enemigo");
+                                
+                            }
+                            else
+                            {
+                                
+                            }
+                            
+                            
+                        }
+                    }
+                    else
+                    {
 
+                    }
+
+                }
+            }
         }
         else
         {
