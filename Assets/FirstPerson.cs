@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 
 public class FirstPerson : MonoBehaviour
 {
+    Foe Enemy;
     [SerializeField] GameObject grenade;
     [SerializeField] Transform grenadespawn;
     [SerializeField] GameObject[] armas;
@@ -15,14 +17,13 @@ public class FirstPerson : MonoBehaviour
     [SerializeField] float playerSpeed;
     [SerializeField] int vida = 3;
     [SerializeField]CharacterController CController;
-    [SerializeField] float angleRotation;
     float playergravity = -9.81f;
     [SerializeField]float _gravity_velocity;
     [SerializeField]float gravityMultiplier = 3;
-    Vector3 movement;
     float h, v;
     AmmoBox AmmoboxObject;
     RaycastHit hit;
+    Vector3 movement;
 
 
 
@@ -35,8 +36,9 @@ public class FirstPerson : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Enemy = FindObjectOfType<Foe>();
         AmmoboxObject = FindObjectOfType<AmmoBox>();
-        armas = GetComponentsInChildren<GameObject>();
+        
         CController = GetComponent<CharacterController>();
         MainCamera = Camera.main;
         armas[0].SetActive(false);
@@ -58,8 +60,8 @@ public class FirstPerson : MonoBehaviour
 
     private void GravedadDelJugador()
     {
-        _gravity_velocity += playergravity * gravityMultiplier * Time.deltaTime;
-        movement.y = _gravity_velocity;
+        //_gravity_velocity += playergravity * gravityMultiplier * Time.deltaTime;
+        //movement.y = _gravity_velocity;
     }
 
     private void Movimiento()
@@ -67,21 +69,21 @@ public class FirstPerson : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
-        Vector2 input = new Vector2(h, v);
+        Vector2 input = new Vector2(h, v).normalized;
+        float angleRotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + MainCamera.transform.eulerAngles.y;
+
         if (input.sqrMagnitude > 0)
         {
 
+            transform.eulerAngles = new Vector3(0, MainCamera.transform.eulerAngles.y, 0);
 
             //Para mover un objeto con un "Character controller", usa move()
-            //Vector3 movement = new Vector3(h, 0, v).normalized;
 
-            angleRotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + MainCamera.transform.eulerAngles.y;
-            transform.eulerAngles = new Vector3(0, angleRotation, 0);
-             movement = Quaternion.Euler(0, angleRotation, 0) * Vector3.forward;
-            CController.Move(movement * playerSpeed * Time.deltaTime);
-            
+            movement = Quaternion.Euler(0, angleRotation, 0) * Vector3.forward;
+
 
         }
+        CController.Move(input.magnitude * movement * 3 * Time.deltaTime);
     }
 
     void detectarRecolectable()
@@ -147,7 +149,25 @@ public class FirstPerson : MonoBehaviour
         }
         else if (armas[1].activeSelf)
         {
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (Physics.Raycast(MainCamera.transform.position, transform.forward, out hit, raycastsyze ))
+                {
+                    if (hit.transform.TryGetComponent<Foe>(out Enemy))
+                    {
+                        if (hit.transform.CompareTag("Enemy"))
+                        {
+                            Enemy.VidaEnemigpo--;
+                            Debug.Log("has disparado a un enemigo");
+                        }
+                    }
+                    else
+                    {
 
+                    }
+                    
+                }
+            }
         }
         else if (armas[2].activeSelf)
         {

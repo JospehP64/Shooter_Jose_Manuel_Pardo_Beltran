@@ -17,6 +17,10 @@ public class Corrutina : MonoBehaviour
 
     void Start()
     {
+        JuegoIniciado = true;
+        ActivarSpawner();//PATA ACTIVAR EL SPAWNER
+
+
         //quaternion.identity quiere decir "rotación" 0,0,0 (en matemáticas, "matriz" e "identidad" ("coordenadas" = "¿posicion?")
         StartCoroutine(semaforo());//IMPORTANTE: SE DEBE USAR STARTCOROUTINE EN START, NO EN UPDATE SOLO Y SIEMPRE QUE SE USE UN METODO IENUMERATOR
         
@@ -26,11 +30,11 @@ public class Corrutina : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ActivarSpawner();
-        if (EnemyCount < 5 && EnemyCount <= 0 && spawnerAtivado == true)
-        {
-            InvocarEnemigos();
-        }
+        
+       //if (EnemyCount < 5 && EnemyCount <= 0 && spawnerAtivado == true)
+       //{
+       //    InvocarEnemigos();
+       //}
         
        
     }
@@ -53,21 +57,40 @@ public class Corrutina : MonoBehaviour
     }
     IEnumerator InvocarEnemigos()
     {
-        for (EnemyCount = 0; EnemyCount < 5; EnemyCount++)
+        while (spawnerAtivado)
         {
-            enemySpawnRandomizer = Random.Range(0, 1);
-            if (enemySpawnRandomizer == 0)
+            yield return new WaitForSeconds(2);
+            if (EnemyCount < 5)
             {
-                Instantiate(foewspawn, spawnpoints[0].position, Quaternion.identity);
+                for (int EnemyNumber = 0; EnemyNumber < 5; EnemyNumber++)
+                {
+
+                    enemySpawnRandomizer = Random.Range(0, 1);
+                    if (enemySpawnRandomizer == 0)
+                    {
+                        Instantiate(foewspawn, spawnpoints[0].position, Quaternion.identity);
+                        EnemyCount++;
+                    }
+                    else
+                    {
+                        Instantiate(foewspawn, spawnpoints[1].position, Quaternion.identity);
+                        EnemyCount++;
+                    }
+
+
+
+                    //con random range puedes crear probabilidades de que se genere un nuevo enemigo en un lugar aleatorio
+
+                }
             }
             else
             {
-                Instantiate(foewspawn, spawnpoints[1].position, Quaternion.identity);
-            }
 
-            //con random range puedes crear probabilidades de que se genere un nuevo enemigo en un lugar aleatorio
+            }
+            
             yield return new WaitForSeconds(2);
         }
+        
         
     }
 }

@@ -12,6 +12,10 @@ public class Foe : MonoBehaviour
     Animator animate;
     FirstPerson player;
     NavMeshAgent agent;
+    [SerializeField]float vidaEnemigpo = 3;
+
+    public float VidaEnemigpo { get => vidaEnemigpo; set => vidaEnemigpo = value; }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,12 +33,28 @@ public class Foe : MonoBehaviour
 
 
 
-         FoeMovement();
+        FoeMovement();
 
        
         
+        MuerteENEMIGO();
 
     }
+
+    private void MuerteENEMIGO()
+    {
+        Debug.Log("Vida de Enemigo restante: " + vidaEnemigpo);
+        if (vidaEnemigpo <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+
+        }
+    }
+
+   
 
     private void FoeMovement()
     {

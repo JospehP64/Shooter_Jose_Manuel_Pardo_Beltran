@@ -22,6 +22,8 @@ public class Explotion : MonoBehaviour
         {
             Destroy(ExplodeEnemy.gameObject);
             CorrutinaEnemigo.EnemyCount--;
+            Destroy(gameObject, 3);
+            
         }
     }
 }
