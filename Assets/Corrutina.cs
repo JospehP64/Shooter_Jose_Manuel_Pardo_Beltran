@@ -10,29 +10,63 @@ public class Corrutina : MonoBehaviour
     bool JuegoIniciado;//PARA INDICAR QUE EL JUEGO ESTA ACTIVADO
     [SerializeField]Transform[] spawnpoints;
     [SerializeField] Foe foewspawn;
-    // Start is called before the first frame update
+    public int EnemyCount = 0;
+    int enemySpawnRandomizer;
+
+
+
     void Start()
     {
         //quaternion.identity quiere decir "rotación" 0,0,0 (en matemáticas, "matriz" e "identidad" ("coordenadas" = "¿posicion?")
         StartCoroutine(semaforo());//IMPORTANTE: SE DEBE USAR STARTCOROUTINE EN START, NO EN UPDATE SOLO Y SIEMPRE QUE SE USE UN METODO IENUMERATOR
-        Instantiate(foewspawn, spawnpoints[Random.Range(0, 2)].position, Quaternion.identity);//con random range puedes crear probabilidades de que se genere un nuevo enemigo en un lugar aleatorio
         
+        StartCoroutine(InvocarEnemigos());
     }
 
     // Update is called once per frame
     void Update()
     {
+        ActivarSpawner();
+        if (EnemyCount < 5 && EnemyCount <= 0 && spawnerAtivado == true)
+        {
+            InvocarEnemigos();
+        }
+        
+       
+    }
+
+    private void ActivarSpawner()
+    {
         if (JuegoIniciado == true)
         {
             spawnerAtivado = true;
         }
-        
     }
+
     IEnumerator semaforo()
     {
         while (spawnerAtivado == true)
         {
             yield return new WaitForSeconds(2);//tiempo a esperar, como "wait" en rpg maker
+        }
+        
+    }
+    IEnumerator InvocarEnemigos()
+    {
+        for (EnemyCount = 0; EnemyCount < 5; EnemyCount++)
+        {
+            enemySpawnRandomizer = Random.Range(0, 1);
+            if (enemySpawnRandomizer == 0)
+            {
+                Instantiate(foewspawn, spawnpoints[0].position, Quaternion.identity);
+            }
+            else
+            {
+                Instantiate(foewspawn, spawnpoints[1].position, Quaternion.identity);
+            }
+
+            //con random range puedes crear probabilidades de que se genere un nuevo enemigo en un lugar aleatorio
+            yield return new WaitForSeconds(2);
         }
         
     }

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AmmoBox : MonoBehaviour
 {
-    Animator animate;
+    [SerializeField]Animator animate;
     // Start is called before the first frame update
     void Start()
     {
-        animate = GetComponent<Animator>();
+        animate = GetComponentInChildren<Animator>();
     }
 
     // Update is called once per frame

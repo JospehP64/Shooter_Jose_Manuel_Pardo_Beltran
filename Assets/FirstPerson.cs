@@ -16,15 +16,26 @@ public class FirstPerson : MonoBehaviour
     [SerializeField] int vida = 3;
     [SerializeField]CharacterController CController;
     [SerializeField] float angleRotation;
+    float playergravity = -9.81f;
+    [SerializeField]float _gravity_velocity;
+    [SerializeField]float gravityMultiplier = 3;
+    Vector3 movement;
+    float h, v;
+    AmmoBox AmmoboxObject;
+    RaycastHit hit;
+
 
 
     private Transform Interactable;
     [SerializeField] float raycastsyze = 2;
 
+    public CharacterController CController1 { get => CController; set => CController = value; }
+
 
     // Start is called before the first frame update
     void Start()
     {
+        AmmoboxObject = FindObjectOfType<AmmoBox>();
         armas = GetComponentsInChildren<GameObject>();
         CController = GetComponent<CharacterController>();
         MainCamera = Camera.main;
@@ -36,21 +47,26 @@ public class FirstPerson : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Debug.Log("Vida restante: " + vida);
         activarARMA();
         Movimiento();
         detectarRecolectable();
+        GravedadDelJugador();
 
-       
-        
+    }
 
+    private void GravedadDelJugador()
+    {
+        _gravity_velocity += playergravity * gravityMultiplier * Time.deltaTime;
+        movement.y = _gravity_velocity;
     }
 
     private void Movimiento()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        float h = Input.GetAxisRaw("Horizontal");
-        float v = Input.GetAxisRaw("Vertical");
+        h = Input.GetAxisRaw("Horizontal");
+        v = Input.GetAxisRaw("Vertical");
         Vector2 input = new Vector2(h, v);
         if (input.sqrMagnitude > 0)
         {
@@ -59,26 +75,26 @@ public class FirstPerson : MonoBehaviour
             //Para mover un objeto con un "Character controller", usa move()
             //Vector3 movement = new Vector3(h, 0, v).normalized;
 
-            angleRotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + Camera.main.transform.eulerAngles.y;
+            angleRotation = Mathf.Atan2(input.x, input.y) * Mathf.Rad2Deg + MainCamera.transform.eulerAngles.y;
             transform.eulerAngles = new Vector3(0, angleRotation, 0);
-            Vector3 movement = Quaternion.Euler(0, angleRotation, 0) * Vector3.forward;
+             movement = Quaternion.Euler(0, angleRotation, 0) * Vector3.forward;
             CController.Move(movement * playerSpeed * Time.deltaTime);
-
+            
 
         }
     }
 
     void detectarRecolectable()
     {
-        if (!Physics.Raycast(MainCamera.transform.position, MainCamera.transform.forward, out RaycastHit hit, raycastsyze))
+        if (Physics.Raycast(MainCamera.transform.position, MainCamera.transform.forward, out  hit, raycastsyze))
         {
-            if (hit.transform.TryGetComponent(out AmmoBox MunitionBox))
+            if (hit.transform.TryGetComponent<AmmoBox>(out AmmoboxObject))
             {
                 Interactable = hit.transform;
                 Interactable.GetComponent<Outline>().enabled = true;
                 if (Input.GetKeyDown(KeyCode.E))//para activar la animacion de abrir la caja
                 {
-                    MunitionBox.abrir();
+                    AmmoboxObject.abrir();
                 }
             }
         }
@@ -109,13 +125,33 @@ public class FirstPerson : MonoBehaviour
             armas[1].SetActive(false);
             armas[2].SetActive(true);
         }
-        if (armas[1].activeSelf)
+        
+        else if (Input.GetKeyDown(KeyCode.F))
+        {
+            armas[0].SetActive(false);
+            armas[1].SetActive(false);
+            armas[2].SetActive(false);
+        }
+        else
+        {
+
+        }
+
+        if (armas[0].activeSelf)
         {
             if (Input.GetMouseButtonDown(0))
             {
                 LanzaGranadas();
             }
-            
+
+        }
+        else if (armas[1].activeSelf)
+        {
+
+        }
+        else if (armas[2].activeSelf)
+        {
+
         }
         else
         {
