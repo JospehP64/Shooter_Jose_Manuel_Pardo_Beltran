@@ -220,6 +220,14 @@ public class FirstPerson : MonoBehaviour
 
         }
     }
+
+    void cargarArma()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            
+        }
+    }
     //void armaMouse()
     //{
     //    float scrollwheel = Input.GetAxis("Mouse Scrollwheel");

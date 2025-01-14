@@ -7,6 +7,8 @@ public class FoeEvent : MonoBehaviour
 {
     GameObject TargetPlayer;
     Corrutina CorrutinaEnemigo;
+    int dropRandomizer;
+    [SerializeField]GameObject ItemToDrop;
     // Start is called before the first frame update
     private void Awake()
     {
@@ -27,6 +29,17 @@ public class FoeEvent : MonoBehaviour
     {
         AnimationEvent MuerteDeEnemigo = new AnimationEvent();
         CorrutinaEnemigo.EnemyCount--;
+        CorrutinaEnemigo.enemyDefeated++;
+
+        dropRandomizer = Random.Range(0, 2);
+        if (dropRandomizer >= 1)
+        {
+
+        }
+        else if (dropRandomizer <= 0)
+        {
+            Instantiate(ItemToDrop, transform.position, Quaternion.identity);
+        }
         Destroy(gameObject);
     }
     public void AtaqueAJugador()
@@ -41,4 +54,5 @@ public class FoeEvent : MonoBehaviour
         }
         
     }
+
 }
