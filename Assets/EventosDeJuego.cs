@@ -4,15 +4,29 @@ using UnityEngine;
 
 public class EventosDeJuego : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public bool SonidoActivado;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        SonidoActivado = true;
+    }
+    void EmpezarPartida()
+    {
+
+    }
+    void SalirDePartida()
+    {
+
+    }
+    void ConfiguracionSonido()
+    {
+        if (SonidoActivado == true)
+        {
+            SonidoActivado = false;
+        }
+        else if (SonidoActivado == false)
+        {
+            SonidoActivado = true;
+        }
     }
 }
