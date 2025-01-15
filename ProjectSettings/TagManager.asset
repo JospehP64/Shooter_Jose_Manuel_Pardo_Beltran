@@ -7,6 +7,8 @@ TagManager:
   - Enemy
   - Team2
   - Objeto
+  - pausa
+  - gui
   layers:
   - Default
   - TransparentFX

@@ -7,9 +7,10 @@ public class Foe : MonoBehaviour
 {
     //[SerializeField] Transform attackPointPosition;
     //[SerializeField] float attackRadius;
-    
+
     //Foe = Enemigo
-    
+    EventosDeJuego GameEvents;
+    AudioSource foe_AudioSource;
     Animator animate;
     FirstPerson player;
     NavMeshAgent agent;
@@ -20,7 +21,8 @@ public class Foe : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        GameEvents = FindAnyObjectByType<EventosDeJuego>();
+        foe_AudioSource = GetComponent<AudioSource>();
        agent = GetComponent<NavMeshAgent>();
         player = FindObjectOfType<FirstPerson>();//para que el enemigo persiga a su objetivo
         animate = GetComponent<Animator>();
@@ -32,7 +34,14 @@ public class Foe : MonoBehaviour
     void Update()
     {
 
-
+        if (GameEvents.SonidoActivado == true)
+        {
+            foe_AudioSource.enabled = true;
+        }
+        else
+        {
+            foe_AudioSource.enabled = false;
+        }
 
         FoeMovement();
 

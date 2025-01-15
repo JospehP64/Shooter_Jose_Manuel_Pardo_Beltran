@@ -6,17 +6,23 @@ public class BossSpawner : MonoBehaviour
 {
     Corrutina CorrutinaEnemigo;
      [SerializeField]GameObject BossToSpawn;
-    bool BossSpawned = false;
+    [SerializeField]bool BossSpawned = false;
     // Start is called before the first frame update
+
+    private void Start()
+    {
+        CorrutinaEnemigo = FindAnyObjectByType<Corrutina>();
+        StartCoroutine(BossCoorutine());
+    }
     private void Update()
     {
+        
         InvocarBoss();
     }
     void InvocarBoss()
     {
-        if (CorrutinaEnemigo.rondas >= 4 && BossSpawned == false)
+        if (CorrutinaEnemigo.rondas >= 4)
         {
-            Instantiate(BossToSpawn, transform.position, Quaternion.identity);
             BossSpawned = true;
 
         }
@@ -24,6 +30,19 @@ public class BossSpawner : MonoBehaviour
         {
 
         }
+        
+    }
+    IEnumerator BossCoorutine()
+    {
+        while (BossSpawned == true)
+        {
+            Instantiate(BossToSpawn, transform.position, Quaternion.identity);
+            
+            yield return new WaitForSeconds(3);
+            BossSpawned = false;
+            StopCoroutine(BossCoorutine());
+        }
+        
     }
 
 }

@@ -16,6 +16,10 @@ public class Corrutina : MonoBehaviour
     public int rondas = 1;
 
 
+    private void Awake()
+    {
+        rondas = 1;
+    }
     void Start()
     {
         JuegoIniciado = true;
@@ -54,11 +58,7 @@ public class Corrutina : MonoBehaviour
             rondas = 4;
         }
 
-        if (rondas >= 4)
-        {
-            JuegoIniciado = false;
-            spawnerAtivado = false;
-        }
+        
     }
 
     private void ActivarSpawner()
@@ -114,10 +114,9 @@ public class Corrutina : MonoBehaviour
             }
             else if (rondas == 2)
             {
-                yield return new WaitForSeconds(2);
                 if (EnemyCount <= 0)
                 {
-                    for (int EnemyNumber = 0; EnemyNumber < 3; EnemyNumber++)
+                    for (int EnemyNumber = 0; EnemyNumber < 2; EnemyNumber++)
                     {
 
                         enemySpawnRandomizer = Random.Range(0, 1);
@@ -138,17 +137,16 @@ public class Corrutina : MonoBehaviour
 
                     }
                 }
-                else if (EnemyCount >= 3)
+                else if (EnemyCount >= 2)
                 {
                     yield return new WaitForSeconds(2);
                 }
             }
            else if (rondas == 3)
             {
-                yield return new WaitForSeconds(2);
                 if (EnemyCount <= 0)
                 {
-                    for (int EnemyNumber = 0; EnemyNumber < 5; EnemyNumber++)
+                    for (int EnemyNumber = 0; EnemyNumber < 2; EnemyNumber++)
                     {
 
                         enemySpawnRandomizer = Random.Range(0, 1);
@@ -169,10 +167,16 @@ public class Corrutina : MonoBehaviour
 
                     }
                 }
-                else if (EnemyCount >= 5)
+                else if (EnemyCount >= 2)
                 {
                     yield return new WaitForSeconds(2);
                 }
+            }
+            else if (rondas >= 4)
+            {
+                JuegoIniciado = false;
+                    spawnerAtivado = false;
+                StopCoroutine(InvocarEnemigos());
             }
             
             

@@ -9,10 +9,11 @@ using UnityEngine.UI;
 
 public class FirstPerson : MonoBehaviour
 {
+    
     float SpeedMultiplier = 3;
     int MunicionGranadas = 3, MunicionLaser = 100, MunicionEscopeta= 5;
     
-
+    PlayerManager playerMan;
     Foe Enemy;
     [SerializeField] GameObject grenade;
     [SerializeField] Transform grenadespawn;
@@ -40,6 +41,8 @@ public class FirstPerson : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        playerMan = FindObjectOfType<PlayerManager>(); 
         Enemy = FindObjectOfType<Foe>();
         AmmoboxObject = FindObjectOfType<AmmoBox>();
         
@@ -70,7 +73,15 @@ public class FirstPerson : MonoBehaviour
 
     private void Movimiento()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        if (playerMan.TimeIsStopped == false)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+        }
+        
         h = Input.GetAxisRaw("Horizontal");
         v = Input.GetAxisRaw("Vertical");
         Vector2 input = new Vector2(h, v).normalized;
@@ -115,26 +126,26 @@ public class FirstPerson : MonoBehaviour
     }
     void activarARMA()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T) && Time.timeScale == 1.0f)
         {
             armas[0].SetActive(true);
             armas[1].SetActive(false);
             armas[2].SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.Y))
+        else if (Input.GetKeyDown(KeyCode.Y) && Time.timeScale == 1.0f)
         {
             armas[0].SetActive(false);
             armas[1].SetActive(true);
             armas[2].SetActive(false);
         }
-        else if (Input.GetKeyDown(KeyCode.U))
+        else if (Input.GetKeyDown(KeyCode.U) && Time.timeScale == 1.0f)
         {
             armas[0].SetActive(false);
             armas[1].SetActive(false);
             armas[2].SetActive(true);
         }
         
-        else if (Input.GetKeyDown(KeyCode.F))
+        else if (Input.GetKeyDown(KeyCode.F) && Time.timeScale == 1.0f)
         {
             armas[0].SetActive(false);
             armas[1].SetActive(false);

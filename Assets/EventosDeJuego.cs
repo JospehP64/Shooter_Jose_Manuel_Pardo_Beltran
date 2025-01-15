@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EventosDeJuego : MonoBehaviour
 {
@@ -10,15 +11,15 @@ public class EventosDeJuego : MonoBehaviour
     {
         SonidoActivado = true;
     }
-    void EmpezarPartida()
+   public  void EmpezarPartida()
     {
-
+        SceneManager.LoadScene(1);
     }
-    void SalirDePartida()
+    public void SalirDePartida()
     {
-
+        Application.Quit();
     }
-    void ConfiguracionSonido()
+    public void ConfiguracionSonido()
     {
         if (SonidoActivado == true)
         {
@@ -28,5 +29,10 @@ public class EventosDeJuego : MonoBehaviour
         {
             SonidoActivado = true;
         }
+    }
+
+    public void VolverALaPantallaDeTitulo()
+    {
+        SceneManager.LoadScene (0);
     }
 }
