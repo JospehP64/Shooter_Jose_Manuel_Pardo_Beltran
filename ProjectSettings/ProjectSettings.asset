@@ -838,8 +838,8 @@ PlayerSettings:
   apiCompatibilityLevelPerPlatform: {}
   m_RenderingPath: 1
   m_MobileRenderingPath: 1
-  metroPackageName: Shooter_Jose_Manuel_Pardo_Beltran
-  metroPackageVersion: 
+  metroPackageName: ShooterJoseManuelPardoBeltran
+  metroPackageVersion: 1.0.0.0
   metroCertificatePath: 
   metroCertificatePassword: 
   metroCertificateSubject: 
@@ -847,7 +847,7 @@ PlayerSettings:
   metroCertificateNotAfter: 0000000000000000
   metroApplicationDescription: Shooter_Jose_Manuel_Pardo_Beltran
   wsaImages: {}
-  metroTileShortName: 
+  metroTileShortName: Shooter_Jose_Manuel_Pardo_Beltran
   metroTileShowName: 0
   metroMediumTileShowName: 0
   metroLargeTileShowName: 0

@@ -9,9 +9,11 @@ using UnityEngine.UI;
 
 public class FirstPerson : MonoBehaviour
 {
-    
+    SwordScript sword;
+    GunAnimateScript AnimateGun;
+    gunSpark ParticulaArmas;   
     float SpeedMultiplier = 3;
-    int MunicionGranadas = 3, MunicionLaser = 100, MunicionEscopeta= 5;
+    int MunicionGranadas = 3, MunicionLaser = 1000, MunicionEscopeta= 5;
     
     PlayerManager playerMan;
     Foe Enemy;
@@ -41,6 +43,9 @@ public class FirstPerson : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+       sword = FindAnyObjectByType<SwordScript>();
+        AnimateGun = FindAnyObjectByType<GunAnimateScript>();
+        ParticulaArmas = FindObjectOfType<gunSpark> ();
         Cursor.lockState = CursorLockMode.Locked;
         playerMan = FindObjectOfType<PlayerManager>(); 
         Enemy = FindObjectOfType<Foe>();
@@ -114,6 +119,50 @@ public class FirstPerson : MonoBehaviour
                 if (Input.GetKeyDown(KeyCode.E))//para activar la animacion de abrir la caja
                 {
                     AmmoboxObject.abrir();
+                    if (armas[0].activeSelf)
+                    {
+                        AnimateGun.Recargar();
+                        if (MunicionGranadas <= 0)
+                        {
+                            MunicionGranadas++;
+                        }
+                        else if (MunicionGranadas >= 3)
+                        {
+                            MunicionGranadas = 3;
+                        }
+
+                    }
+                    else if (armas[1].activeSelf)
+                    {
+                        AnimateGun.Recargar();
+                        if (MunicionEscopeta <= 0)
+                        {
+                            MunicionEscopeta++;
+                        }
+                        else if (MunicionEscopeta >= 5)
+                        {
+                            MunicionEscopeta = 5;
+                        }
+
+
+                    }
+                    else if (armas[2].activeSelf)
+                    {
+                        AnimateGun.Recargar();
+                        if (MunicionLaser <= 0)
+                        {
+                            MunicionLaser = +100;
+                        }
+                        else if (MunicionEscopeta >= 1000)
+                        {
+                            MunicionLaser = 1000;
+                        }
+
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
         }
@@ -156,18 +205,24 @@ public class FirstPerson : MonoBehaviour
 
         }
 
-        if (armas[0].activeSelf)
+        if (armas[0].activeSelf && MunicionGranadas > 0)
         {
             if (Input.GetMouseButtonDown(0))
             {
+                AnimateGun.Disparar();
+                MunicionGranadas--;
+                ParticulaArmas.InvocarParticula();
                 LanzaGranadas();
             }
 
         }
         else if (armas[1].activeSelf)
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0) && MunicionEscopeta > 0)
             {
+                
+                MunicionEscopeta--;
+                ParticulaArmas.InvocarParticula();
                 if (Physics.Raycast(MainCamera.transform.position, transform.forward, out hit, raycastsyze ))
                 {
                     if (hit.transform.TryGetComponent<Foe>(out Enemy))
@@ -176,6 +231,7 @@ public class FirstPerson : MonoBehaviour
                         {
                             if (Enemy.VidaEnemigpo > 0)
                             {
+                                
                                 Enemy.VidaEnemigpo--;
                                 Debug.Log("has disparado a un enemigo");
                             }
@@ -196,8 +252,10 @@ public class FirstPerson : MonoBehaviour
         }
         else if (armas[2].activeSelf)
         {
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0) && MunicionLaser > 0)
             {
+                ParticulaArmas.InvocarParticula();
+                MunicionLaser--;
                 if (Physics.Raycast(MainCamera.transform.position, transform.forward, out hit, raycastsyze))
                 {
                     if (hit.transform.TryGetComponent<Foe>(out Enemy))
@@ -206,6 +264,7 @@ public class FirstPerson : MonoBehaviour
                         {
                             if (Enemy.VidaEnemigpo > 0)
                             {
+                                
                                 Enemy.VidaEnemigpo--;
                                 Debug.Log("has disparado a un enemigo");
                                 
@@ -228,17 +287,38 @@ public class FirstPerson : MonoBehaviour
         }
         else
         {
-
-        }
-    }
-
-    void cargarArma()
-    {
-        if (Input.GetKeyDown(KeyCode.R))
-        {
             
+            if(Physics.Raycast(MainCamera.transform.position, transform.forward, out hit, raycastsyze))
+                {
+                if (hit.transform.TryGetComponent<Foe>(out Enemy))
+                {
+                    if (hit.transform.CompareTag("Enemy"))
+                    {
+                        if (Enemy.VidaEnemigpo > 0)
+                        {
+
+                            Enemy.VidaEnemigpo--;
+                            Debug.Log("has disparado a un enemigo");
+
+                        }
+                        else
+                        {
+
+                        }
+
+
+                    }
+                }
+                else
+                {
+
+                }
+
+            }
         }
     }
+
+    
     //void armaMouse()
     //{
     //    float scrollwheel = Input.GetAxis("Mouse Scrollwheel");
